@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import "./colors.css";
+
+@layer base {
+  html {
+    @apply bg-black h-full text-slate-300;
+    font-size: 16px;
+    font-family: 'courier prime', monospace;
+  }
+
+  body {
+    @apply h-full;
+  }
+
+  #app {
+
+  }
+}
