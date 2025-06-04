@@ -1,5 +1,11 @@
 <script>
+  let prompt = $state('');
+  let awd = $state('');
 
+  async function sendPrompt() {
+    await window.electron.sendPrompt(prompt);
+    awd = 'hehehe';
+  }
 </script>
 
 <h1>hi</h1>
@@ -13,4 +19,8 @@
   close
 </button>
 
-<p>{window.electron.chrome()} version</p>
+<p>version</p>
+
+<input class="border" type="text" bind:value={prompt} />
+<button class="border" onclick={sendPrompt}>Send</button>
+<textarea class="border" bind:value={awd} />
