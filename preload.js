@@ -9,5 +9,5 @@ contextBridge.exposeInMainWorld('electron', {
 
   },
 
-  sendPrompt: (prompt) => ipcRenderer.invoke('ai.sendPrompt', prompt),
+  sendPrompt: (args) => ipcRenderer.invoke('ai.sendPrompt', args),
 })

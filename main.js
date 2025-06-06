@@ -14,13 +14,6 @@ const openai = new OpenAI({
   apiKey: env.openai_api_key,
 });
 
-// const response = await openai.responses.create({
-//     model: "gpt-4.1-nano",
-//     input: "Write a one-sentence bedtime story about a unicorn."
-// });
-//
-// console.log(response);
-
 let win;
 
 const createWindow = () => {
@@ -51,10 +44,13 @@ ipcMain.on('window:close', () => {
   win.close();
 });
 
-ipcMain.handle('ai.sendPrompt', async (prompt) => {
-  await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 1000);
+ipcMain.handle('ai.sendPrompt', async (event, args) => {
+  // console.log(prompt, typeof prompt);
+  const response = await openai.responses.create({
+    model: "gpt-4.1-nano",
+    input: args.prompt,
   });
+  return {
+    output_text: response.output_text,
+  };
 });
