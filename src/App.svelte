@@ -1,8 +1,9 @@
-<script>
-  let conversations = $state([
-    { id: 1, title: "Conversation 1" },
-    { id: 2, title: "Conversation 2" },
-    { id: 3, title: "Conversation 3" },
+<script lang="ts">
+  import { Conversation } from "./models/Conversation.svelte";
+
+  let conversations:Conversation[] = $state([
+    new Conversation(1, 'Conversation 1'),
+    new Conversation(1, 'Conversation 2'),
   ]);
   let currentConversation = $state(conversations[0]?.title || ''); // Auto-select Conversation 1
   let prompt = $state('');

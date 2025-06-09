@@ -6,15 +6,17 @@
   "main": "main.js",
   "scripts": {
     "dev": "vite",
-    "start": "npm run build && electron .",
+    "start": "vite build && electron .",
     "quick": "electron .",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tsconfig/svelte": "^5.0.4",
     "electron": "^36.3.2",
     "svelte": "^5.28.1",
+    "typescript": "~5.8.3",
     "vite": "^6.3.5"
   },
   "dependencies": {

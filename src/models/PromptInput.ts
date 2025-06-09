@@ -1,5 +1,7 @@
 export class PromptInput {
-  constructor(input) {
+  private input: string;
+
+  constructor(input:string) {
     this.input = input;
   }
 }

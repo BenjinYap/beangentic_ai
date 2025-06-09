@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import App from "./App.svelte";
 
-  const windowDecorator = true;
+  const windowDecorator:boolean = true;
 </script>
 
 <div class="grid h-screen" style="grid-template-rows: auto 1fr auto; grid-template-columns: auto 1fr auto;">
