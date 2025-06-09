@@ -51,6 +51,10 @@ ipcMain.handle('ai.sendPrompt', async (event, args) => {
     input: args.prompt,
   });
   return {
-    output_text: response.output_text,
+    output: response.output_text,
+    usage: {
+      input_tokens: response.usage.input_tokens,
+      output_tokens: response.usage.output_tokens,
+    },
   };
 });

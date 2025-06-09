@@ -4,11 +4,11 @@ type PromptUsage = {
 }
 
 export class PromptOutput {
-  private output: string;
+  private text: string;
   private usage: PromptUsage;
 
-  constructor(output:string, usage:PromptUsage) {
-    this.output = output;
+  constructor(text:string, usage:PromptUsage) {
+    this.text = text;
     this.usage = usage;
   }
 }

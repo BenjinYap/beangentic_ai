@@ -1,28 +1,33 @@
 <script lang="ts">
   import { Conversation } from "./models/Conversation.svelte";
+  import { PromptInput } from "./models/PromptInput";
+  import { PromptOutput } from "./models/PromptOutput";
 
   let conversations:Conversation[] = $state([
     new Conversation(1, 'Conversation 1'),
-    new Conversation(1, 'Conversation 2'),
+    new Conversation(2, 'Conversation 2'),
   ]);
-  let currentConversation = $state(conversations[0]?.title || ''); // Auto-select Conversation 1
+  let current_conversation:Conversation|null = $state(conversations[0]);
   let prompt = $state('');
-  let response = $state('');
-  let messages = $state([]); // Array to store conversation messages
 
   async function sendPrompt() {
-    if (prompt.trim() === '') return;
-    messages.push({ sender: 'user', text: prompt });
-    const result = await window.electron.sendPrompt({ prompt: prompt });
-    messages.push({ sender: 'ai', text: result.output_text || 'No response' });
+    if (prompt.trim() === '') {
+      return;
+    }
+    const the_prompt = prompt;
+    current_conversation.messages.push(new PromptInput(the_prompt));
     prompt = '';
+    const result = await window.electron.sendPrompt({ prompt: the_prompt });
+    current_conversation.messages.push(new PromptOutput(result.output, result.usage));
   }
 
+  $effect(() => {
+    console.log(conversations);
+  });
+
   function selectConversation(conversation) {
-    currentConversation = conversation.title;
+    current_conversation = conversation;
     prompt = '';
-    response = '';
-    messages = []; // Reset messages for the new conversation
   }
 </script>
 
@@ -44,15 +49,15 @@
 
   <!-- Current Conversation -->
   <div class="w-3/4 flex flex-col">
-    <h2 class="text-lg font-bold p-4 border-b">{currentConversation || 'Select a conversation'}</h2>
-    {#if currentConversation}
+    <h2 class="text-lg font-bold p-4 border-b">{current_conversation.title || 'Select a conversation'}</h2>
+    {#if current_conversation}
       <!-- Messages Area -->
       <div class="flex-grow overflow-y-auto p-4 space-y-4">
-        {#each messages as message}
+        {#each current_conversation.messages as message}
           <div class="p-2 rounded-lg" 
-               class:ml-auto={message.sender === 'user'} 
-               class:bg-blue-600={message.sender === 'user'} 
-               class:bg-gray-700={message.sender === 'ai'}
+               class:ml-auto={message instanceof PromptInput}
+               class:bg-blue-600={message instanceof PromptInput}
+               class:bg-gray-700={message instanceof PromptOutput}
           >
             <p class="text-sm">{message.text}</p>
           </div>
