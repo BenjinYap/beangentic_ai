@@ -1,5 +1,5 @@
 import { PromptInput } from "./PromptInput";
-import { PromptOutput } from "./PromptOutput";
+import { PromptOutputSvelte } from "./PromptOutput.svelte";
 
 const awd = `**Thin Client vs. Thick Client**
 **Thin Client:**
@@ -38,11 +38,14 @@ Would you like more detailed information or specific use cases?`;
 export class Conversation {
   public id:number = $state(0);
   public title:string = $state('');
-  public messages:(PromptInput|PromptOutput)[] = $state([]);
+  public messages:(PromptInput|PromptOutputSvelte)[] = $state([]);
 
   constructor(id:number, title:string) {
     this.id = id;
     this.title = title;
-    this.messages.push(new PromptOutput(awd, {output_tokens:5, input_tokens:10}));
+    const dwa = new PromptOutputSvelte();
+    dwa.text = awd;
+    dwa.usage = {output_tokens:5, input_tokens:10};
+    this.messages.push(dwa);
   }
 }
