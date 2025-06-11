@@ -58,7 +58,7 @@
       <!-- Messages Area -->
       <div class="flex-grow overflow-y-auto p-4 space-y-4">
         {#each current_conversation.messages as message}
-          <div class="p-2 rounded-lg" 
+          <div class="p-2 rounded-lg relative" 
                class:ml-auto={message instanceof PromptInput}
                class:bg-blue-600={message instanceof PromptInput}
                class:bg-gray-700={message instanceof PromptOutput}
@@ -66,9 +66,17 @@
             {#if message instanceof PromptInput}
               <p class="text-sm text-white">{message.text}</p>
             {:else}
-              <RenderedPromptOutput
-                output={message}
-              />
+              <RenderedPromptOutput output={message} />
+              <div class="absolute top-2 right-2 text-xs text-gray-300 flex flex-col items-end">
+                <div class="flex items-center">
+                  <span class="mr-1">⬆</span>
+                  <span class="text-right w-8">{message.usage.input_tokens}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="mr-1">⬇</span>
+                  <span class="text-right w-8">{message.usage.output_tokens}</span>
+                </div>
+              </div>
             {/if}
           </div>
         {/each}
