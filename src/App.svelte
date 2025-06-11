@@ -48,6 +48,7 @@
       {#each conversations as conversation}
         <li
           class="cursor-pointer p-2 hover:bg-gray-200"
+          class:bg-gray-700={current_conversation?.id === conversation.id}
           onclick={() => selectConversation(conversation)}
         >
           {conversation.title}
