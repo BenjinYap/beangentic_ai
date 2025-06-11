@@ -45,11 +45,11 @@ ipcMain.on('window:close', () => {
 });
 
 ipcMain.handle('ai.sendPrompt', async (event, args) => {
-  // console.log(prompt, typeof prompt);
   const response = await openai.responses.create({
     model: "gpt-4.1-nano",
     input: args.prompt,
   });
+  console.log(response, typeof response.output_text);
   return {
     output: response.output_text,
     usage: {

@@ -2,6 +2,7 @@
   import { Conversation } from "./models/Conversation.svelte";
   import { PromptInput } from "./models/PromptInput";
   import { PromptOutput } from "./models/PromptOutput";
+  import RenderedPromptOutput from "./components/RenderedPromptOutput.svelte";
 
   let conversations:Conversation[] = $state([
     new Conversation(1, 'Conversation 1'),
@@ -21,13 +22,16 @@
     current_conversation.messages.push(new PromptOutput(result.output, result.usage));
   }
 
-  $effect(() => {
-    console.log(conversations);
-  });
-
   function selectConversation(conversation) {
     current_conversation = conversation;
     prompt = '';
+  }
+
+  function handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendPrompt();
+    }
   }
 </script>
 
@@ -59,7 +63,13 @@
                class:bg-blue-600={message instanceof PromptInput}
                class:bg-gray-700={message instanceof PromptOutput}
           >
-            <p class="text-sm">{message.text}</p>
+            {#if message instanceof PromptInput}
+              <p class="text-sm text-white">{message.text}</p>
+            {:else}
+              <RenderedPromptOutput
+                output={message}
+              />
+            {/if}
           </div>
         {/each}
       </div>
@@ -71,6 +81,7 @@
           rows="2"
           bind:value={prompt}
           placeholder="Type your message..."
+          onkeydown={handleKeyPress}
         ></textarea>
         <button class="border px-4 py-2 bg-blue-500 text-white" onclick={sendPrompt}>
           Send
