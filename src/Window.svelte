@@ -4,7 +4,7 @@
   const windowDecorator:boolean = true;
 </script>
 
-<div class="grid h-screen" style="grid-template-rows: auto 1fr auto; grid-template-columns: auto 1fr auto;">
+<div class="grid h-screen overflow-hidden" style="grid-template-rows: auto 1fr auto; grid-template-columns: auto 1fr auto;">
   <!-- Top Row -->
   <div class="border resize-handle"></div>
   <div class="border resize-handle"></div>
@@ -12,7 +12,7 @@
 
   <!-- Middle Row -->
   <div class="border resize-handle"></div>
-  <div class="border flex flex-col">
+  <div class="border flex flex-col overflow-hidden">
     <!-- Title Bar -->
     <div class="flex items-center justify-between bg-gray-800 text-white px-4 py-2">
       <div class="flex items-center">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <!-- App Content -->
-    <div class="flex-grow border">
+    <div class="flex-grow border overflow-auto">
       <App />
     </div>
   </div>
