@@ -43,9 +43,9 @@ export class Conversation {
   constructor(id:number, title:string) {
     this.id = id;
     this.title = title;
-    const dwa = new PromptOutputSvelte();
-    dwa.text = awd;
-    dwa.usage = {output_tokens:5, input_tokens:10};
-    this.messages.push(dwa);
+    // const dwa = new PromptOutputSvelte();
+    // dwa.text = awd;
+    // dwa.usage = {output_tokens:5, input_tokens:10};
+    // this.messages.push(dwa);
   }
 }
